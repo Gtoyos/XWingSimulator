@@ -1,9 +1,13 @@
-# EL CLIENTE 
+﻿######### X-Wing flight game client #########
+
+
+############ CLIENT CONFIGURATION ###########
 SERVER_HOSTNAME = "192.168.50.50"
 SERVER_PORT = 2021
 MUNDO_PORT = 0
 TURTLE_SIZE = 20  #tamaño del jugador
 WORLD_SIZE = 100  #cuadrado de 100 x 100
+#############################################
 
 from socket import *
 import threading as th
@@ -222,6 +226,26 @@ def keyCommand(key,clientSkt):
         log.info("New command: "+msg)
 
 def main():
+    print("""
+                                --)-----------|____________|
+                                              ,'       ,'
+                -)------========            ,'  ____ ,'
+                         `.    `.         ,'  ,'__ ,'
+                           `.    `.     ,'       ,'
+                             `.    `._,'_______,'__
+                               [._ _| ^--      || |
+                       ____,...-----|__________ll_|\\
+      ,.,..-------\"\"\"\"\"     \"----'                 ||
+  .-""  |=========================== ______________ |
+   "-...l_______________________    |  |'      || |_]
+                                [`-.|__________ll_|      X-Wing Flight Client
+                              ,'    ,' `.        `.      By Grupo06
+                            ,'    ,'     `.    ____`.    Curso Redes de computadoras FING-UDELAR
+                -)---------========        `.  `.____`.
+                                             `.        `.
+    By Grupo06                                 `.________`.
+                              --)-------------|___________|
+    """)
     username = input("Ingrese su username: ")
     log.basicConfig(format='%(levelname)s- %(message)s')
     log.root.setLevel(log.INFO)
