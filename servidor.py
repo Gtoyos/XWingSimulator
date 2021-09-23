@@ -2,12 +2,13 @@
 
 ############ SERVER CONFIGURATION ###########
 CONTROL_PORT = 2021
-SPEED_CONTROL = 5
+SPEED_CONTROL = 10
 DELTATIME_CONTROL = 0.01
 VISUAL_RANGE = 15
 MAX_CONNECTIONS_PER_HOST = 2000
-DESIREDMAX_UDP_MSGSIZE = 400
+DESIREDMAX_UDP_MSGSIZE = 32768
 MAX_USERNAME_LEN = 300
+ENABLE_BOTCHK = False
 #############################################
 
 
@@ -25,6 +26,8 @@ Broadcasters = {}
 MundoLock = thread.allocate_lock()
 
 def botChk(clientHost,clientPort):
+    if(not ENABLE_BOTCHK):
+        return True
     i=0
     for x,y in Mundo.items():
         if y[0]==clientHost and y[1]==clientPort:
@@ -35,6 +38,8 @@ def botChk(clientHost,clientPort):
 def usernameChk(username):
     return not (username in Mundo)
 def mundoPortChk(clientHost,clientPort):
+    if(not ENABLE_BOTCHK):
+        return True
     for x,y in Mundo.items():
         if y[0]==clientHost and y[1]==clientPort:
             return False
@@ -258,8 +263,16 @@ def mundoSimulator():
                 v[2] += SPEED_CONTROL*DELTATIME_CONTROL
             elif v[4]=="W":
                 v[2] -= SPEED_CONTROL*DELTATIME_CONTROL
-            v[3]=numpy.clip(v[3],-50,50)
-            v[2]=numpy.clip(v[2],-50,50)
+            if(v[3])>50:
+                v[3]=-50
+            if(v[3])<-50:
+                v[3]=50
+            if(v[2])>50:
+                v[2]=-50
+            if(v[2])<-50:
+                v[2]=50
+            #v[3]=numpy.clip(v[3],-50,50)
+            #v[2]=numpy.clip(v[2],-50,50)
         MundoLock.release()
         time.sleep(DELTATIME_CONTROL)
         log.debug("Mundo="+str(Mundo))

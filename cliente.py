@@ -21,6 +21,8 @@ angleMap = {'N':90,'E':0,'S':270,'W':180}
 quitFlag = False
 you = []
 friends = {}
+frenlock = th.Semaphore(1)
+
 def updateScreen(screen,firstMundoCnd):
     firstMundoCnd.wait()
     global you
@@ -39,7 +41,9 @@ def updateScreen(screen,firstMundoCnd):
     yout.showturtle()
     turtle.tracer(0,0)
     while True:
+        frenlock.acquire()
         f1=friends.copy()
+        frenlock.release()
         s = set(oldfriends) ^ set(f1)
         for x in s:
             if x in f1:
@@ -82,6 +86,7 @@ def readWorld(clientSkt,firstMundoCnd):
         msg = msg.decode().split("\n")
         msg = msg[:-1]
         log.debug("World data received: "+str(msg))
+        frenlock.acquire()
         for x in msg:
             msg0 = x.split(" ")
             if(msg0[0]=="WORLD"):
@@ -95,6 +100,7 @@ def readWorld(clientSkt,firstMundoCnd):
                 you = [float(msg0[1]),float(msg0[2]),msg0[3]]
             else:
                 friends[msg0[0]] = [float(msg0[1]),float(msg0[2]),msg0[3]]
+        frenlock.release()
         firstMundoCnd.set()
         if quitFlag:
             clientSkt.close()
