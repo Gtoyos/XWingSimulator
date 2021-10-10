@@ -2,7 +2,7 @@
 
 
 ############ CLIENT CONFIGURATION ###########
-SERVER_HOSTNAME = "192.168.50.50"
+SERVER_HOSTNAME = "127.0.0.1"
 SERVER_PORT = 2021
 MUNDO_PORT = 0
 TURTLE_SIZE = 20  #tamaño del jugador
