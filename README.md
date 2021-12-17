@@ -21,7 +21,7 @@ Para manejar el X-Wing se utilizan las teclas clásicas de dirección ``W/A/S/D`
 
 ## Información
 
-Este programa fue desarrollado en el contexto del curso de Redes de Computadores de la facultad de ingeniería - UDELAR.
+Este programa fue desarrollado en el contexto del curso de Redes de Computadoras de la Facultad de Ingeniería - UDELAR.
 
 #### Integrantes
 
